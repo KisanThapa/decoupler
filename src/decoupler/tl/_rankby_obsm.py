@@ -46,6 +46,8 @@ def rankby_obsm(
     %(key)s
     uns_key
         ``adata.uns`` key to store the results.
+    obs_keys
+        list of columns in adata.obs to use for testing.
 
     Returns
     -------
@@ -62,6 +64,9 @@ def rankby_obsm(
         sc.pp.scale(adata)
         sc.tl.pca(adata)
         dc.tl.rankby_obsm(adata, "X_pca")
+
+        # or, to perform based on a subset of obs columns.
+        dc.tl.rankby_obsm(adata, "X_pca", obs_keys = ["condition"])
     """
     assert isinstance(uns_key, str) or uns_key is None, "uns_key must be str or None"
     # Extract
