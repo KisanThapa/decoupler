@@ -31,10 +31,7 @@ def _input_rank_obsm(
 
 @docs.dedent
 def rankby_obsm(
-    adata: AnnData,
-    key: str,
-    uns_key: str | None = "rank_obsm",
-    obs_keys: list | None = None
+    adata: AnnData, key: str, uns_key: str | None = "rank_obsm", obs_keys: list | None = None
 ) -> None | pd.DataFrame:
     """
     Ranks features in ``adata.obsm`` by the significance of their association with metadata in ``adata.obs``.
