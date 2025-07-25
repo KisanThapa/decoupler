@@ -67,7 +67,7 @@ def rankby_obsm(
     # Extract
     df, x_vars, y_vars = _input_rank_obsm(adata=adata, key=key)
 
-    if obs_keys != None:
+    if obs_keys is not None:
         x_vars = obs_keys
 
     # Test
