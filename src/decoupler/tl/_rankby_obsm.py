@@ -66,7 +66,7 @@ def rankby_obsm(
         dc.tl.rankby_obsm(adata, "X_pca")
 
         # or, to perform based on a subset of obs columns.
-        dc.tl.rankby_obsm(adata, "X_pca", obs_keys = ["condition"])
+        dc.tl.rankby_obsm(adata, "X_pca", obs_keys=["condition"])
     """
     assert isinstance(uns_key, str) or uns_key is None, "uns_key must be str or None"
     # Extract
