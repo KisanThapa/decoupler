@@ -34,6 +34,7 @@ def rankby_obsm(
     adata: AnnData,
     key: str,
     uns_key: str | None = "rank_obsm",
+    obs_keys: list | None = None
 ) -> None | pd.DataFrame:
     """
     Ranks features in ``adata.obsm`` by the significance of their association with metadata in ``adata.obs``.
@@ -68,6 +69,10 @@ def rankby_obsm(
     assert isinstance(uns_key, str) or uns_key is None, "uns_key must be str or None"
     # Extract
     df, x_vars, y_vars = _input_rank_obsm(adata=adata, key=key)
+
+    if obs_keys != None:
+        x_vars = obs_keys
+
     # Test
     res = []
     for x_var in x_vars:
