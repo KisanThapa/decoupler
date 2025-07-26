@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## 2.1.2
+
+### Changes
+
+- `tl.rankby_obsm` now accepts `AnnData.obs` column names specified in the `obs_keys` argument.
+
 ## 2.1.1
 
 ### Added
