@@ -31,9 +31,7 @@ def _input_rank_obsm(
 
 @docs.dedent
 def rankby_obsm(
-    adata: AnnData,
-    key: str,
-    uns_key: str | None = "rank_obsm",
+    adata: AnnData, key: str, uns_key: str | None = "rank_obsm", obs_keys: list | None = None
 ) -> None | pd.DataFrame:
     """
     Ranks features in ``adata.obsm`` by the significance of their association with metadata in ``adata.obs``.
@@ -48,6 +46,8 @@ def rankby_obsm(
     %(key)s
     uns_key
         ``adata.uns`` key to store the results.
+    obs_keys
+        list of columns in adata.obs to use for testing.
 
     Returns
     -------
@@ -64,10 +64,17 @@ def rankby_obsm(
         sc.pp.scale(adata)
         sc.tl.pca(adata)
         dc.tl.rankby_obsm(adata, "X_pca")
+
+        # or, to perform based on a subset of obs columns.
+        dc.tl.rankby_obsm(adata, "X_pca", obs_keys=["condition"])
     """
     assert isinstance(uns_key, str) or uns_key is None, "uns_key must be str or None"
     # Extract
     df, x_vars, y_vars = _input_rank_obsm(adata=adata, key=key)
+
+    if obs_keys is not None:
+        x_vars = obs_keys
+
     # Test
     res = []
     for x_var in x_vars:
