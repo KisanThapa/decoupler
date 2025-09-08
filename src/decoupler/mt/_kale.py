@@ -13,8 +13,8 @@ from decoupler._log import _log
 from decoupler._Method import Method, MethodMeta
 
 
-CORES_USED = 1 # For debugging, use a single core
-# CORES_USED = max(1, int(os.cpu_count() * 0.8))  # Use 80% of available cores
+# CORES_USED = 1 # For debugging, use a single core
+CORES_USED = max(1, int(os.cpu_count() * 0.8))  # Use 80% of available cores
 
 
 def std_dev_mean_norm_rank(n_population: int, k_sample: int) -> float:
