@@ -6,7 +6,6 @@ import pandas as pd
 from joblib import Parallel, delayed
 from scipy.sparse import issparse
 from scipy.stats import zscore, norm
-from statsmodels.stats.multitest import multipletests
 
 from decoupler._log import _log
 from decoupler._Method import Method, MethodMeta

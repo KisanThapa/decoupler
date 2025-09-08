@@ -26,6 +26,7 @@ dependencies = [
   "adjusttext",
   "anndata",
   "docrep",
+  "joblib>=1.5.1",
   "marsilea",
   "numba",
   "requests",
