@@ -1,6 +1,7 @@
 from decoupler.mt._aucell import aucell
 from decoupler.mt._gsea import gsea
 from decoupler.mt._gsva import gsva
+from decoupler.mt._kale import kale
 from decoupler.mt._mdt import mdt
 from decoupler.mt._mlm import mlm
 from decoupler.mt._ora import ora
@@ -14,6 +15,7 @@ _methods = [
     aucell,
     gsea,
     gsva,
+    kale,
     mdt,
     mlm,
     ora,

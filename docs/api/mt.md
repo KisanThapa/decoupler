@@ -12,6 +12,7 @@
     mt.aucell
     mt.gsea
     mt.gsva
+    mt.kale
     mt.mdt
     mt.mlm
     mt.ora
