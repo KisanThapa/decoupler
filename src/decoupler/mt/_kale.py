@@ -240,7 +240,7 @@ def _func_kale(
     mat: np.ndarray,
     adj: np.ndarray,
     adata: AnnData,
-    net: DataFrame,
+    net: pd.DataFrame,
     verbose:bool=False,
     method: str = "ranks_from_zscore",
     n_targets: int = 10,
