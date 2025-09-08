@@ -4,16 +4,11 @@ import math
 import os
 import numpy as np
 import pandas as pd
-from joblib import Parallel, delayed
 from scipy.sparse import issparse
 from scipy.stats import zscore, norm
 
 from decoupler._log import _log
 from decoupler._Method import Method, MethodMeta
-
-
-CORES_USED = 1 # For debugging, use a single core
-# CORES_USED = max(1, int(os.cpu_count() * 0.8))  # Use 80% of available cores
 
 
 def std_dev_mean_norm_rank(n_population: int, k_sample: int) -> float:
@@ -193,28 +188,12 @@ def run_tf_analysis(adata, adj, ignore_zeros, min_targets, analysis_method):
         else:
             raise ValueError(f"Unknown analysis method: {analysis_method}")
 
-        # ───── Parallel processing of cells ───────────────────────────────────────
+        # ───── Sequential processing of cells ──────────────────────────────────
         print(f"Starting TF analysis for user")
-        print(f"Starting TF activity using {CORES_USED if CORES_USED > 0 else 'all available'} cores.")
-        tasks = [
-            delayed(process_func)(
-                cell_name,
-                data_for_processing.loc[cell_name],
-                priors,
-            )
-            for cell_name in data_for_processing.index
+        cell_results_list = [
+            process_func(cell_name, data_for_processing.loc[cell_name], priors)
+            for cell_name in tqdm(data_for_processing.index, desc="Processing cells")
         ]
-
-        if CORES_USED == 1:  # Useful for debugging
-            print("Running sequentially (CORES_USED=1)...")
-            cell_results_list = [
-                process_func(cell_name, data_for_processing.loc[cell_name], priors)
-                for cell_name in tqdm(data_for_processing.index, desc="Processing cells")
-            ]
-        else:
-            print(f"Running in parallel with CORES_USED={CORES_USED}...")
-            cell_results_list = Parallel(n_jobs=CORES_USED, backend="loky", verbose=2)(tqdm(tasks, desc="Processing cells"))
-
 
         # ───── Aggregate results into two separate DataFrames ───────────────────
         print("\nAggregating results...")
