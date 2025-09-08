@@ -1,19 +1,9 @@
 import os
-
-# IMPORTANT: Set these environment variables BEFORE importing numpy, scipy, etc.
-# This forces the underlying math libraries (MKL, OpenBLAS) to be single-threaded,
-# preventing conflicts with Numba's threading layer.
-os.environ['OMP_NUM_THREADS'] = '1'
-os.environ['OPENBLAS_NUM_THREADS'] = '1'
-os.environ['MKL_NUM_THREADS'] = '1'
-os.environ['VECLIB_MAXIMUM_THREADS'] = '1'
-os.environ['NUMEXPR_NUM_THREADS'] = '1'
-os.environ['NUMBA_NUM_THREADS'] = '1'
-
 import numpy as np
 from tqdm.auto import tqdm
 import math
 import numpy as np
+from joblib import Parallel, delayed
 import pandas as pd
 from scipy.sparse import issparse
 from scipy.stats import zscore, norm
@@ -21,6 +11,10 @@ from anndata import AnnData
 
 from decoupler._log import _log
 from decoupler._Method import Method, MethodMeta
+
+
+CORES_USED = 1 # For debugging, use a single core
+# CORES_USED = max(1, int(os.cpu_count() * 0.8))  # Use 80% of available cores
 
 
 def std_dev_mean_norm_rank(n_population: int, k_sample: int) -> float:
@@ -200,12 +194,28 @@ def run_tf_analysis(adata, priors, ignore_zeros, min_targets, analysis_method):
         else:
             raise ValueError(f"Unknown analysis method: {analysis_method}")
 
-        # ───── Sequential processing of cells ──────────────────────────────────
+        # ───── Parallel processing of cells ───────────────────────────────────────
         print(f"Starting TF analysis for user")
-        cell_results_list = [
-            process_func(cell_name, data_for_processing.loc[cell_name], priors)
-            for cell_name in tqdm(data_for_processing.index, desc="Processing cells")
+        print(f"Starting TF activity using {CORES_USED if CORES_USED > 0 else 'all available'} cores.")
+        tasks = [
+            delayed(process_func)(
+                cell_name,
+                data_for_processing.loc[cell_name],
+                priors,
+            )
+            for cell_name in data_for_processing.index
         ]
+
+        if CORES_USED == 1:  # Useful for debugging
+            print("Running sequentially (CORES_USED=1)...")
+            cell_results_list = [
+                process_func(cell_name, data_for_processing.loc[cell_name], priors)
+                for cell_name in tqdm(data_for_processing.index, desc="Processing cells")
+            ]
+        else:
+            print(f"Running in parallel with CORES_USED={CORES_USED}...")
+            cell_results_list = Parallel(n_jobs=CORES_USED, backend="loky", verbose=2)(
+                tqdm(tasks, desc="Processing cells"))
 
         # ───── Aggregate results into two separate DataFrames ───────────────────
         print("\nAggregating results...")
@@ -235,7 +245,6 @@ def run_tf_analysis(adata, priors, ignore_zeros, min_targets, analysis_method):
         pvalue_df = pvalue_df.reindex(adata.obs_names)
         activation_df = activation_df.reindex(adata.obs_names)
 
-        # pvalue_df.dropna(axis=1, how="all", inplace=True)
         scores = -np.log10(pvalue_df)
         scores = scores.multiply(activation_df, fill_value=0)
 
