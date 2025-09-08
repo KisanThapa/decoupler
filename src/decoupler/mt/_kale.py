@@ -259,6 +259,7 @@ def run_tf_analysis(adata, adj, ignore_zeros, min_targets, analysis_method):
 def _func_kale(
     mat,
     adj,
+    verbose=verbose,
     method: str = "ranks_from_zscore",
     n_targets: int = 10,
     ignore_zeros: bool = False

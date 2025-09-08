@@ -747,6 +747,7 @@ dependencies = [
     { name = "scipy" },
     { name = "session-info2" },
     { name = "tqdm" },
+    { name = "xgboost" },
 ]
 
 [package.optional-dependencies]
@@ -832,6 +833,7 @@ requires-dist = [
     { name = "statsmodels", marker = "extra == 'test'" },
     { name = "tqdm" },
     { name = "twine", marker = "extra == 'dev'", specifier = ">=4.0.2" },
+    { name = "xgboost", specifier = ">=3.0.4" },
     { name = "xgboost", marker = "extra == 'full'" },
     { name = "xgboost", marker = "extra == 'test'" },
 ]
