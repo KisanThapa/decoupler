@@ -234,7 +234,7 @@ def run_tf_analysis(adata, priors, ignore_zeros, min_targets, analysis_method):
         pvalue_df = pvalue_df.reindex(adata.obs_names)
         activation_df = activation_df.reindex(adata.obs_names)
 
-        pvalue_df.dropna(axis=1, how="all", inplace=True)
+        # pvalue_df.dropna(axis=1, how="all", inplace=True)
         scores = -np.log10(pvalue_df)
         scores = scores.multiply(activation_df, fill_value=0)
 
@@ -259,7 +259,7 @@ def _func_kale(
 
     scores, pvalues = run_tf_analysis(adata, net, ignore_zeros, min_targets=n_targets, analysis_method=method)
 
-    return scores, pvalues
+    return scores.to_numpy(), pvalues.to_numpy()
 
 
 _kale = MethodMeta(

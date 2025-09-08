@@ -88,11 +88,7 @@ def _run(
             es = pd.DataFrame(es, index=obs, columns=sources)
         else:
             es, pv = func(mat, adjm, data, net, verbose=verbose, **kwargs)
-            if isinstance(es, pd.DataFrame):
-                if not es.index.equals(obs) or not es.columns.equals(sources):
-                    es = pd.DataFrame(es.values, index=obs, columns=sources)
-            else:
-                es = pd.DataFrame(es, index=obs, columns=sources)
+            es = pd.DataFrame(es, index=obs, columns=sources)
     else:
         sources, cnct, starts, offsets = idxmat(features=var, net=net, verbose=verbose)
         if isbacked:
