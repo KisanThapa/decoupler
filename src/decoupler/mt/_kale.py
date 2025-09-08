@@ -129,7 +129,7 @@ def _process_single_cell_stouffer(cell_name: str, expression_z_scores: pd.Series
     return cell_name, regulators, p_values, directions
 
 
-def run_tf_analysis(adata, adj, ignore_zeros, min_targets, analysis_method):
+def run_tf_analysis(adata, priors, ignore_zeros, min_targets, analysis_method):
     try:
         # Validate input data
         if adata is None or adata.n_obs == 0:
@@ -236,15 +236,17 @@ def run_tf_analysis(adata, adj, ignore_zeros, min_targets, analysis_method):
 
 
 def _func_kale(
-    mat,
-    adj,
-    verbose,
+    mat: np.ndarray,
+    adj: np.ndarray,
+    adata: AnnData,
+    net: pd.DataFrame,
+    verbose:bool=False,
     method: str = "ranks_from_zscore",
     n_targets: int = 10,
     ignore_zeros: bool = False
 ) -> tuple[np.ndarray, np.ndarray]:
 
-    scores, pvalues = run_tf_analysis(mat, adj, ignore_zeros, min_targets=n_targets, analysis_method=method)
+    scores, pvalues = run_tf_analysis(adata, net, ignore_zeros, min_targets=n_targets, analysis_method=method)
 
     return scores, pvalues
 

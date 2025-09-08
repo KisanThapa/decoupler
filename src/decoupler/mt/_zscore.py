@@ -10,6 +10,8 @@ from decoupler._Method import Method, MethodMeta
 def _func_zscore(
     mat: np.ndarray,
     adj: np.ndarray,
+    adata: AnnData = None,
+    net: pd.DataFrame = None,
     flavor: str = "RoKAI",
     verbose: bool = False,
 ) -> tuple[np.ndarray, np.ndarray]:

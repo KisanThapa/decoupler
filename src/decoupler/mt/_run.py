@@ -81,14 +81,18 @@ def _run(
                     if sps.issparse(bmat):
                         bmat = bmat.toarray()
                     bmat = bmat[:, msk_col]
-                bes, bpv = func(bmat, adjm, verbose=batch_verbose, **kwargs)
+                bes, bpv = func(bmat, adjm, data, net, verbose=batch_verbose, **kwargs)
                 es.append(bes)
                 pv.append(bpv)
             es = np.vstack(es)
             es = pd.DataFrame(es, index=obs, columns=sources)
         else:
-            es, pv = func(mat, adjm, verbose=verbose, **kwargs)
-            es = pd.DataFrame(es, index=obs, columns=sources)
+            es, pv = func(mat, adjm, data, net, verbose=verbose, **kwargs)
+            if isinstance(es, pd.DataFrame):
+                if not es.index.equals(obs) or not es.columns.equals(sources):
+                    es = pd.DataFrame(es.values, index=obs, columns=sources)
+            else:
+                es = pd.DataFrame(es, index=obs, columns=sources)
     else:
         sources, cnct, starts, offsets = idxmat(features=var, net=net, verbose=verbose)
         if isbacked:

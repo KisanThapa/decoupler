@@ -169,6 +169,8 @@ def _aREA(mat: np.ndarray, net: np.ndarray, wts: None | np.ndarray = None) -> np
 def _func_viper(
     mat: np.ndarray,
     adj: np.ndarray,
+    adata: AnnData = None,
+    net: pd.DataFrame = None,
     pleiotropy: bool = True,
     reg_sign: float = 0.05,
     n_targets: int = 10,
