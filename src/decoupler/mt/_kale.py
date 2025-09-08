@@ -1,7 +1,17 @@
+import os
+
+# IMPORTANT: Set these environment variables BEFORE importing numpy, scipy, etc.
+# This forces the underlying math libraries (MKL, OpenBLAS) to be single-threaded,
+# preventing conflicts with Numba's threading layer.
+os.environ['OMP_NUM_THREADS'] = '1'
+os.environ['OPENBLAS_NUM_THREADS'] = '1'
+os.environ['MKL_NUM_THREADS'] = '1'
+os.environ['VECLIB_MAXIMUM_THREADS'] = '1'
+os.environ['NUMEXPR_NUM_THREADS'] = '1'
+
 import numpy as np
 from tqdm.auto import tqdm
 import math
-import os
 import numpy as np
 import pandas as pd
 from scipy.sparse import issparse
