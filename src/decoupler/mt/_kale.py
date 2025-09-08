@@ -254,7 +254,7 @@ def _func_kale(
     net: pd.DataFrame,
     verbose:bool=False,
     method: str = "ranks_from_zscore",
-    n_targets: int = 10,
+    n_targets: int = 0,
     ignore_zeros: bool = False
 ) -> tuple[np.ndarray, np.ndarray]:
 
