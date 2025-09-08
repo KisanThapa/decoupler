@@ -61,7 +61,7 @@ def _process_single_cell(
     tf_summary = tf_summary[tf_summary["AvailableTargets"] > 0]
 
     if tf_summary.empty:
-        return cell_name, {}
+        return cell_name, [], [], []
 
     tf_summary["ActivationDir"] = np.where(tf_summary["RankMean"] < 0.5, 1, -1)
     tf_summary["Sigma_n_k"] = tf_summary["AvailableTargets"].apply(
