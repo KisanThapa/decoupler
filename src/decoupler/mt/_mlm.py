@@ -36,7 +36,7 @@ def _fit(
 def _func_mlm(
     mat: np.ndarray,
     adj: np.ndarray,
-    adata: AnnData = None,
+    adata = None,
     net: pd.DataFrame = None,
     tval: bool = True,
     verbose: bool = False,

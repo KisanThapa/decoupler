@@ -26,7 +26,7 @@ def _xgbr(
 def _func_mdt(
     mat: np.ndarray,
     adj: np.ndarray,
-    adata: AnnData = None,
+    adata = None,
     net: pd.DataFrame = None,
     verbose: bool = False,
     **kwargs,

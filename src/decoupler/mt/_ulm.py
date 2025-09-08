@@ -24,7 +24,7 @@ def _tval(r: np.ndarray, df: float) -> np.ndarray:
 def _func_ulm(
     mat: np.ndarray,
     adj: np.ndarray,
-    adata: AnnData = None,
+    adata = None,
     net: pd.DataFrame = None,
     tval: bool = True,
     verbose: bool = False,

@@ -29,7 +29,7 @@ def _xgbr(
 def _func_udt(
     mat: np.ndarray,
     adj: np.ndarray,
-    adata: AnnData = None,
+    adata = None,
     net: pd.DataFrame = None,
     verbose: bool = False,
     **kwargs,
