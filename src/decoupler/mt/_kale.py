@@ -258,7 +258,7 @@ def _func_kale(
     ignore_zeros: bool = False
 ) -> tuple[np.ndarray, np.ndarray]:
 
-    scores, pvalues = run_tf_analysis(adata, net, ignore_zeros, min_targets=n_targets, analysis_method=method)
+    scores, pvalues = run_tf_analysis(adata, net, ignore_zeros, min_targets=0, analysis_method=method)
 
     return scores.to_numpy(), pvalues.to_numpy()
 
