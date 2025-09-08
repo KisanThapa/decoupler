@@ -25,7 +25,7 @@ def _func_ulm(
     mat: np.ndarray,
     adj: np.ndarray,
     adata = None,
-    net: pd.DataFrame = None,
+    net = None,
     tval: bool = True,
     verbose: bool = False,
 ) -> tuple[np.ndarray, np.ndarray]:

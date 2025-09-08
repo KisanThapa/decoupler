@@ -27,7 +27,7 @@ def _func_mdt(
     mat: np.ndarray,
     adj: np.ndarray,
     adata = None,
-    net: pd.DataFrame = None,
+    net = None,
     verbose: bool = False,
     **kwargs,
 ) -> tuple[np.ndarray, None]:

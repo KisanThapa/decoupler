@@ -11,7 +11,7 @@ def _func_zscore(
     mat: np.ndarray,
     adj: np.ndarray,
     adata = None,
-    net: pd.DataFrame = None,
+    net = None,
     flavor: str = "RoKAI",
     verbose: bool = False,
 ) -> tuple[np.ndarray, np.ndarray]:

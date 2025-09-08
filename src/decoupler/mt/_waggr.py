@@ -142,7 +142,7 @@ def _func_waggr(
     mat: np.ndarray,
     adj: np.ndarray,
     adata = None,
-    net: pd.DataFrame = None,
+    net = None,
     fun: str | Callable = "wmean",
     times: int | float = 1000,
     seed: int | float = 42,

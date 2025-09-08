@@ -170,7 +170,7 @@ def _func_viper(
     mat: np.ndarray,
     adj: np.ndarray,
     adata = None,
-    net: pd.DataFrame = None,
+    net = None,
     pleiotropy: bool = True,
     reg_sign: float = 0.05,
     n_targets: int = 10,
