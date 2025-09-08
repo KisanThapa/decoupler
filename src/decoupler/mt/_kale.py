@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import issparse
 from scipy.stats import zscore, norm
+from anndata import AnnData
 
 from decoupler._log import _log
 from decoupler._Method import Method, MethodMeta
