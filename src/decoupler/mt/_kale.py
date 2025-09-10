@@ -243,7 +243,7 @@ def run_tf_analysis(
                 z_mat, index=adata.obs_names, columns=adata.var_names
             )
 
-        elif "gene_expression" in analysis_method:
+        elif "ranks_of_ranks" in analysis_method:
             print("Using raw gene expression as input for per-cell ranking...")
             data_for_processing = pd.DataFrame(
                 X, index=adata.obs_names, columns=adata.var_names
